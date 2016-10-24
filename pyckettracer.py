@@ -30,11 +30,15 @@ if __name__ == '__main__':
         if not ans:
             print '?'
             continue
-        georesp = georeader.city(ans.src)
+
         try:
-            geocity = '%s %s'%(response.city.name, response.country.name)
+            georesp = georeader.city(ans.src)
+            geocity = (georesp.city.name, \
+                       georesp.country.name, \
+                       [georesp.location.latitude, \
+                       georesp.location.longitude])
         except geoip2.errors.AddressNotFoundError:
-            pass
+            geocity = None
 
         print ans.type, ans.src, geocity
 
